@@ -1,6 +1,7 @@
 # EEB5300_KCKH
 ## **Research Goals**
   Genome assembly of an undescribed _Acanthobothrium_ species; improvement of draft genome assembly.
+  
   Gene identification of assembled _Acanthobothrium sp._ through structural annotation.
 
 ## **Background Overview**
