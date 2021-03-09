@@ -3,6 +3,8 @@
   Genome assembly of an undescribed _Acanthobothrium_ species; improvement of draft genome assembly.
   
   Gene identification of assembled _Acanthobothrium sp._ through structural annotation.
+  
+  Data: Illumina reads from Caira lab
 
 ## **Background Overview**
   
