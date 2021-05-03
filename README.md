@@ -43,6 +43,9 @@ Parasitol. 42, 77–151.
 (7) Laferty, K. D., Allesina, S. et al. Parasites in food webs: The ultimate missing links. Ecology Letters 11, 533-546 (2008).
 
 
+## **Research Goals**
+Our initial goal was to assemble the genome of an undescribed _Acanthobothrium tortum_ species and peform genome annotation.  However, as we our project progressed, our objective shifted towards a sole focus on genome assembly.  Part of the motivation for this alternate path was attributed to the high quality of our raw data and the limited knowledge we had in the beginning concerning whether our data had previously been processed.  Thus, we chose to assemble both raw and trimmed reads and compare the quality and completeness of these genome assemblies to each other.  In doing so, we hoped to gain a better understanding of how each assembly program works and which assemblers and aligners will benefit us most in future projects.
+ 
  
 ## **Data**
 For this project, we used historical data that was prepared, sequenced and de-multiplexed at Kansas University in 2015.  Libraries were prepared using a single 350bp insert and Illumina TruSeq adaptors with the Illumina TruSeq PCR-free library kit.  The libraries were subsequently multi-plexed with four other libraries that were also prepared at KU and sequenced on the HiSeq2500.  Our raw data is de-multiplexed and contains paired end reads that are approximately 100bp in length.
