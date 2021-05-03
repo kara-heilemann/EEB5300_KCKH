@@ -1,8 +1,8 @@
 # EEB5300_KCKH
 ## **Research Goals**
-  Genome assembly of an undescribed _Acanthobothrium_ species; improvement of draft genome assembly.
+  Genome assembly of an undescribed _Acanthobothrium tortum_; improvement of draft genome assembly.
   
-  Gene identification of assembled _Acanthobothrium sp._ through structural annotation.
+  Gene identification of assembled _Acanthobothrium tortum_ through structural annotation.
   
   Data: Illumina reads from Caira lab
 
@@ -14,12 +14,12 @@
   
   Since in most orders, tapeworm larva generally lack distinct morphological features, they are characterized by traits exhibited by the adult tapeworms.  Adult species are generally identified by their anterior head region, or scolex, followed by a germinative region, or neck. The neck serves as a site of cell proliferation and it produces proglottids or individual reproductive units that contain all of the sexual organs required to produce eggs (Caira et al., 1999).   
 
-  In our project, we will focus on a species of _Acanthobothrium_, which is of the order Onchoproteocephalidea. _Acanthobothrium_ is currently the most diverse genus of tapeworms, boasting 201 valid, described species (Zaragoza-Tapia et al., 2020). They parasitize the intestines of a variety of sharks and rays in both freshwater and saltwater globally. Like many Onchoproteocephallideans, _Acanthobothrium_ species are armed with hooks on their scolex (Caira et al., 2017). 
+  In our project, we will focus on _Acanthobothrium tortum_, which is of the order Onchoproteocephalidea. _Acanthobothrium_ is currently the most diverse genus of tapeworms, boasting 201 valid, described species (Zaragoza-Tapia et al., 2020). They parasitize the intestines of a variety of sharks and rays in both freshwater and saltwater globally. Like many Onchoproteocephallideans, _Acanthobothrium_ species are armed with hooks on their scolex (Caira et al., 2017). 
   
 ## **Motivation**
 
   The generation of tapeworm genomes has wide implications, including better understanding of ecosystem biodiversity, cestode taxonomy, and evolutionary patterns, as well as for human and veterinary medicine. Tapeworm biodiversity is an indicator for ecosystem health, so it is important to understand their role. These organisms travel through the food chain in a multi-host life cycle and may impact population levels as well as energy cycling (Gagne et al., 2021 andLafferty et al., 2008). However, in order to begin studying and describing these roles and processes, what  species are actually present must be known. Historically, tapeworm taxonomy has mainly used morphological characteristics to define species, but the collaborative project “A survey of tapeworms from vertebrate bowels of the earth” by Caira et al (2017) has focused on obtaining both morphological and genomic data in an effort to reconcile global tapeworm taxonomy with its phylogeny. Understanding their phylogenetic tree and evolutionary history is important for figuring out how they parasitize certain organisms, which has impacts on veterinary and human medicine in addition to ecological and evolutionary studies.
   
-  This project is specifically investigating an undescribed _Acanthobothrium_ species (_Acanthobothrium sp.)_ as a preliminary genome study for future comparative genome research into the study of tapeworm life history evolution in freshwater and saltwater elasmobranch hosts. _Acanthobothrium_ is one such tapeworm genus in which the worms are found to parasitize elasmobranchs in both freshwater and saltwater. This species was chosen because it is most similar to these other _Acanthobothrium_ species that parasitize both hosts for which genomic data is not yet available. Assembling and annotating this _Acanthobothrium sp._ genome will provide for easier assembly and annotation of future Acanthobothrium genomes. 
+  This project is specifically investigating an undescribed _Acanthobothrium tortum_ as a preliminary genome study for future comparative genome research into the study of tapeworm life history evolution in freshwater and saltwater elasmobranch hosts. _Acanthobothrium_ is one such tapeworm genus in which the worms are found to parasitize elasmobranchs in both freshwater and saltwater. This species was chosen because it is most similar to these other _Acanthobothrium_ species that parasitize both hosts for which genomic data is not yet available. Assembling and annotating this _Acanthobothrium tortum_ genome will provide for easier assembly and annotation of future _Acanthobothrium_ genomes. 
   
     
