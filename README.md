@@ -54,9 +54,13 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 
   ### **Jellyfish**
   
+  ### **Quality Checks with FastQC**
+  
+  ### **Trimming with Sickle**
+  
   ### **Kraken**
   
-  ### **FastQC**
+ 
 
 
   
