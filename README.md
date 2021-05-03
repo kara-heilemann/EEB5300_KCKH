@@ -1,8 +1,4 @@
 # EEB5300_KCKH
-## **Research Goals**
-  Genome assembly of an undescribed _Acanthobothrium tortum_ species.
-  
-  Data: Illumina reads from Caira lab
 
 ## **Overview**
   
@@ -51,6 +47,17 @@ Our initial goal was to assemble the genome of an undescribed _Acanthobothrium t
 For this project, we used historical data that was prepared, sequenced and de-multiplexed at Kansas University in 2015.  Libraries were prepared using a single 350bp insert and Illumina TruSeq adaptors with the Illumina TruSeq PCR-free library kit.  The libraries were subsequently multi-plexed with four other libraries that were also prepared at KU and sequenced on the HiSeq2500.  Our raw data is de-multiplexed and contains paired end reads that are approximately 100bp in length.
 
 This raw data is organized as zipped fasta files and is stored on UCONN’s Xanadu cluster.  These files can be found here.
+
+
+## **Workflow/Analysis**
+![image](https://user-images.githubusercontent.com/80171724/116919445-4403de80-ac1f-11eb-9790-a130c9ee7b15.png)
+
+  ### **Jellyfish**
+  
+  ### **Kraken**
+  
+  ### **FastQC**
+
 
   
     
