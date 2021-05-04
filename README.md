@@ -80,10 +80,24 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
  The circle on the graph above highlights noise that originates from a discrepancy in base call at the 5'end of the sequence.  We were unsure if this was due to aggressive adapter trimming from a pre-processing step or if it was due to library bias, so we decided to trim the reads and perform a quality check on these trimmed sequences as well.
 
 
-
-  
-  
   ### **Trimming with Sickle**
+  We used Sickle to trim the 5' and 3' ends of our paired end raw reads and remove any low quality reads.  We kept a minimum read length of 20 basepairs and a minimum average quality score of 20.
+  
+  ```
+  module load sickle/1.33
+
+  sickle pe \
+	  -f ../01_raw_reads/BE8G1_R1.fastq \
+	  -r ../01_raw_reads/BE8G1_R2.fastq \
+	  -t sanger \
+	  -o trim_BE8G1_R1.fastq \
+	  -p trim_BE8G1_R2.fastq \
+	  -s sinlges.fastq \
+	  -q 20 \
+	  -l 20 
+
+  module unload sickle/1.33
+  ```
   
   ### **Kraken**
   
