@@ -119,7 +119,47 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   ### **Assembly**
   
   #### **SPAdes**
-  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  SPAdes is easy to use and it takes the paired-end reads that are in FASTA format as input and  and not intended for larger genomes and the manual states that for such purposes it can be used at the users risk.  This assembly took six days. 
+  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.
+  
+  The slurm script for the SPAdes assembly entitled SPAdes.sh:
+  
+  ```
+  #!/bin/bash
+#SBATCH --job-name=SPAdes
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=400G
+#SBATCH --partition=himem
+#SBATCH --qos=himem
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=khalia.cain@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##		SPAdes					##
+##########################################################
+
+module load SPAdes/3.13.0
+
+spades.py \
+	-1 ../../03_kraken/unclassified_1.fastq \
+	-2 ../../03_kraken/unclassified_2.fastq \
+	-s ../../02_quality_control/sinlges20.fastq \
+	--careful \
+	--threads 8 \
+	--memory 400 \
+	-o . 
+
+
+module unload SPAdes/3.13.0
+```
+
+The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
  
 
