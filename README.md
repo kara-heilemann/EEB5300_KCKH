@@ -115,6 +115,70 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   Thus, we decided to assemble both the raw and trimmed reads to see if trimming benefited the quality of genome assembly.
 
   ### **Kraken**
+  Kraken was run on both raw reads and trimmed reads in order to screen for potential contaminants. 
+  
+  Working directory:
+  ```
+  cestodes-5300/
+  ├── kara/
+  │   ├── 03_Kraken/
+  ```
+  Kraken command:
+  ```
+  module load kraken/2.0.8-beta
+  module load jellyfish/2.2.6
+  
+  kraken2 -db /isg/shared/databases/kraken2/Standard \
+        --paired cat_R1raw.fq cat_R2raw.fq \
+        --use-names \
+        --threads 16 \
+        --output kraken_raw_general.out \
+        --unclassified-out raw_unclassified#.fastq \
+        --classified-out raw_classified#.fastq      \
+        --report raw_kraken_report.txt \
+        --use-mpa-style
+```
+	
+  The complete script is called kraken_raw.sh. This creates the sequence output, report and a summary report.
+  ```
+  ├── raw_classified_1.fastq
+  ├── raw_classified_2.fastq
+  ├── raw_kraken_report.txt
+  ├── kraken_raw_general.out
+  ├── raw_unlassified_1.fastq
+  └── raw_unlassified_2.fastq
+  ```
+  The Kraken report file allows for identification of the main groups of contamination through the following command: 
+  ```
+  grep -v "|" raw_kraken_report.txt
+  ```
+  which gave the following results:
+  ```
+  d__Bacteria	690865
+  d__Eukaryota	595949
+  d__Archaea	9751
+  d__Viruses	10630
+  ```
+  When further looking at the full report file after transferring to the desktop, it was somewhat surprising to find that the largest contaminants were human and bacterial, rather than host contamination (elasmobranch).
+  Additionally, the .err file will show:
+  ```
+  37507337 sequences (7576.48 Mbp) processed in 336.862s (6680.6 Kseq/m, 1349.48 Mbp/m).
+  1434069 sequences classified (3.82%)
+  36073268 sequences unclassified (96.18%)
+  ```
+  This workflow was repeated for the trimmed reads, for which the full slurm script is found as kraken_trim.sh. The trimmed read kraken_report.txt gave the following results:
+  ```
+  d__Bacteria	647092
+  d__Eukaryota	394742
+  d__Archaea	8949
+  d__Viruses	9920
+  ```
+  The .err file gave the following results for the trimmed reads:
+  ```
+  36413015 sequences (7096.73 Mbp) processed in 180.939s (12074.7 Kseq/m, 2353.30 Mbp/m).
+  1182002 sequences classified (3.25%)
+  35231013 sequences unclassified (96.75%)
+  ```
   
   ### **Assembly**
   
