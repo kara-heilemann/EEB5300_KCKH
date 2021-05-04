@@ -108,8 +108,11 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   fastqc trim_BE8G1_R2.fastq
   module unload fastqc/0.11.7
   ```
-  Here are some of the visuals generated from this quality check:
+  The per base sequence content did not change after trimming: 
+  ![Screen Shot 2021-05-04 at 11 54 23 AM](https://user-images.githubusercontent.com/80171724/117032489-85ec5d80-accf-11eb-8028-53a958b25db2.png)
   
+  Thus, we decided to assemble both the raw and trimmed reads to see if trimming benefited the quality of assembly.
+
   ### **Kraken**
   
  
