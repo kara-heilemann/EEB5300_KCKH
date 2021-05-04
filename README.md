@@ -54,6 +54,23 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   ### **Jellyfish**
   
   ### **Quality Checks with FastQC**
+  We used FastQC to determine the quality of our raw data.  
+  
+  In our working directory:
+  
+  ```
+  #unzip zipped fastq files
+  gunzip BE8G1_R1.fastq.gz
+  gunzip BE8G1_R2.fastq.gz
+  
+  #load fastqc
+  module load fastqc/0.11.7
+  fastqc BE8G1_R1.fastq
+  fastqc BE8G1_R2.fastq
+  ```
+  
+  This gave us an html file with the following statistics:
+  
   
   ### **Trimming with Sickle**
   
