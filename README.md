@@ -67,6 +67,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   module load fastqc/0.11.7
   fastqc BE8G1_R1.fastq
   fastqc BE8G1_R2.fastq
+  module unload fastqc/0.11.7
   ```
   
   This gave us an html file for both the forward and reverse reads.
@@ -98,6 +99,16 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 
   module unload sickle/1.33
   ```
+  
+  ### **Quality Checks of trimmed reads with FastQC**
+  We then used FastQC to determine the quality of our trimmed reads. 
+  ```
+  module load fastqc/0.11.7
+  fastqc trim_BE8G1_R1.fastq
+  fastqc trim_BE8G1_R2.fastq
+  module unload fastqc/0.11.7
+  ```
+  Here are some of the visuals generated from this quality check:
   
   ### **Kraken**
   
