@@ -116,6 +116,11 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 
   ### **Kraken**
   
+  ### **Assembly**
+  
+  #### **SPAdes**
+  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  SPAdes is easy to use and it takes the paired-end reads that are in FASTA format as input and  and not intended for larger genomes and the manual states that for such purposes it can be used at the users risk.  This assembly took six days. 
+  
  
 
 
