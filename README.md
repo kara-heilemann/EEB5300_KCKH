@@ -119,7 +119,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   ### **Assembly**
   
   #### **SPAdes**
-  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.
+  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.  We were unable to assemble the raw, unclassified as well as the raw (pre-contaminant screening) reads due to time constraints and limited computational resources
   
   The slurm script for the SPAdes assembly entitled SPAdes.sh:
   
