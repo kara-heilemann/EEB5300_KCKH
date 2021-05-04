@@ -71,11 +71,13 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   
   This gave us an html file for both the forward and reverse reads.
   Below are some of the visuals from the quality check of the reverse raw read:
+  
   ![Screen Shot 2021-05-04 at 11 05 52 AM](https://user-images.githubusercontent.com/80171724/117025218-b8df2300-acc8-11eb-9b52-655341c9fd62.png)
   
   While there were no flags that indicate a failure of any of the quality check statistics, there was a warning for per base sequence content:
 ![Screen Shot 2021-05-04 at 11 09 54 AM](https://user-images.githubusercontent.com/80171724/117025867-4753a480-acc9-11eb-8995-c4c108af1c1c.png)
-  The circle on the graph above highlights noise that originates from a discrepancy in base call at the 5'end of the sequence.  We were unsure if this was due to aggressive adapter trimming from a pre-processing step or if it was due to library bias, so we decided to trim the reads and perform a quality check on these trimmed sequences as well.
+  
+ The circle on the graph above highlights noise that originates from a discrepancy in base call at the 5'end of the sequence.  We were unsure if this was due to aggressive adapter trimming from a pre-processing step or if it was due to library bias, so we decided to trim the reads and perform a quality check on these trimmed sequences as well.
 
 
 
