@@ -112,7 +112,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   
   ![Screen Shot 2021-05-04 at 11 54 23 AM](https://user-images.githubusercontent.com/80171724/117032489-85ec5d80-accf-11eb-8028-53a958b25db2.png)
   
-  Thus, we decided to assemble both the raw and trimmed reads to see if trimming benefited the quality of assembly.
+  Thus, we decided to assemble both the raw and trimmed reads to see if trimming benefited the quality of genome assembly.
 
   ### **Kraken**
   
