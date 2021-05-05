@@ -253,8 +253,14 @@ module unload SPAdes/3.13.0
 
 The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
+  #### **MaSuRCA**
  
 
-
+ ### **Assembly Quality**
+ #### **Quast**
+ #### **BUSCO**
+ #### **Bowtie2**
+ 
+ ## **Discussion**
   
     
