@@ -306,7 +306,7 @@ END
 
  ### **Assembly Quality**
  #### **Quast**
- We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length N50, total coverage and number of contigs.  Output for this program is located in the report.txt file.
+ We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file.
  
  The Quast shell script for the SPAdes assembly of the trimmed and unclassified reads was as follows:
  
@@ -375,6 +375,18 @@ quast.py ../04_Assembly/masurca_ru/CA/final.genome.scf.fasta \
 
 module unload quast/5.0.2
 ```
+
+The output for the SPAdes assembly:
+
+![Screen Shot 2021-05-05 at 11 06 27 AM](https://user-images.githubusercontent.com/80171724/117163740-f491ef80-ad91-11eb-8697-b01b6eaac620.png)
+
+The output for the MaSuRCA assembly:
+
+![Screen Shot 2021-05-05 at 11 07 32 AM](https://user-images.githubusercontent.com/80171724/117163911-1a1ef900-ad92-11eb-9dea-f1970cb64356.png)
+
+The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The best assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
+
+
 
  #### **BUSCO**
  #### **Bowtie2**
