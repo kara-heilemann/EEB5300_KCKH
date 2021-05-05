@@ -299,6 +299,7 @@ JF_SIZE = 9500000000
 SOAP_ASSEMBLY=0
 END
  ```
+
  
  The full shell script for the MaSuRCA assembly of the raw and unclassified reads is here.
  
