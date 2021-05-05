@@ -301,7 +301,7 @@ END
  ```
 
  
- The full shell script for the MaSuRCA assembly of the raw and unclassified reads is MaSuRCA_ru.sh.
+ The full shell script for the MaSuRCA assembly of the raw and unclassified reads is https://github.com/kara-heilemann/EEB5300_KCKH/blob/69b355604d5892760d2e50423e1c06b51c73f86a/MaSuRCA_ru.sh.
  
 
  ### **Assembly Quality**
