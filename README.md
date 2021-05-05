@@ -471,6 +471,7 @@ module unload bowtie2/2.3.5.1
 
  ```
  Bowtie2 output is in the .err file for the SPAdes assembly:
+ 
 ![Screen Shot 2021-05-05 at 11 33 04 AM](https://user-images.githubusercontent.com/80171724/117167893-ab439f00-ad95-11eb-8ecf-43bf6dfb646e.png)
 
 
