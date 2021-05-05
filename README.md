@@ -568,6 +568,7 @@ The BUSCO results for the MaSuRCA assembly of raw and unclassified reads:
 
 ![Screen Shot 2021-05-05 at 12 11 23 PM](https://user-images.githubusercontent.com/80171724/117173695-04fa9800-ad9b-11eb-9199-f6443855c27f.png)
 
+The expected BUSCO score for a non-model organism like _Acanthobothrium tortum_ is 50-95% therefore the better assembly between these two datasets by BUSCO standards was the MaSuRCA assembly for raw and unclassified data.
 
  
  ## **Discussion**
