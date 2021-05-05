@@ -483,6 +483,91 @@ module unload bowtie2/2.3.5.1
 The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we used the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
 
  #### **BUSCO**
+BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database.
+
+Here is the BUSCO script for the SPAdes assembly of trimmed and unclassified reads:
+
+```
+#!/bin/bash
+#SBATCH --job-name=busco_SPAdes
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 1
+#SBATCH --mem=100G
+#SBATCH --partition=xeon
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=khalia.cain@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##		BUSCO					##	
+##########################################################
+# SPAdes
+
+module load busco/5.0.0
+
+
+busco -i ../03_assembly/SPAdes/misc/assembled_scaffolds.fasta \
+	-o SPAdes_unclass_trim3 \
+	-l metazoa_odb10 \
+	-m genome
+
+
+module unload busco/5.0.0 
+date
+```
+
+
+
+Here is the BUSCO script for the MaSuRCA assembly of raw and unclassified reads:
+
+```
+#!/bin/bash
+#SBATCH --job-name=busco_mru
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 1
+#SBATCH --mem=50G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kara.heilemann@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##              BUSCO                                   ##      
+##########################################################
+# MaSuRCA
+
+module load busco/5.0.0
+
+busco -i ../../04_Assembly/masurca_ru/CA/final.genome.scf.fasta \
+    -o MaSuRCA_ru \
+    -l metazoa_odb10 \
+    -m genome
+
+module unload busco/5.0.0
+```
+
+The BUSCO results for the SPAdes assembly of trimmed and unclassified reads:
+
+![Screen Shot 2021-05-05 at 12 08 47 PM](https://user-images.githubusercontent.com/80171724/117173339-a9300f00-ad9a-11eb-99cf-b05575d8e28c.png)
+
+
+
+The BUSCO results for the MaSuRCA assembly of raw and unclassified reads:
+
+![Screen Shot 2021-05-05 at 12 11 23 PM](https://user-images.githubusercontent.com/80171724/117173695-04fa9800-ad9b-11eb-9199-f6443855c27f.png)
+
 
  
  ## **Discussion**
