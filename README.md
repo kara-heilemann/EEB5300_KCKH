@@ -470,7 +470,17 @@ bowtie2 -x MaSuRCA_rawun_index/MaSuRCA_rawun_index \
 module unload bowtie2/2.3.5.1
 
  ```
+ Bowtie2 output is in the .err file for the SPAdes assembly:
+![Screen Shot 2021-05-05 at 11 33 04 AM](https://user-images.githubusercontent.com/80171724/117167893-ab439f00-ad95-11eb-8ecf-43bf6dfb646e.png)
+
+
  
+ And the .err file for MaSuRCA assembly:
+ 
+ ![Screen Shot 2021-05-05 at 11 31 23 AM](https://user-images.githubusercontent.com/80171724/117167639-6f103e80-ad95-11eb-88d6-3196655dafdf.png)
+
+The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we used the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
+
  #### **BUSCO**
 
  
