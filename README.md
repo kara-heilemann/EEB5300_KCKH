@@ -574,4 +574,9 @@ The expected BUSCO score for a non-model organism like _Acanthobothrium tortum_ 
  ## **Discussion**
    #### **Assembler Comparison**
  <img width="468" alt="AssemblyComparison" src="https://user-images.githubusercontent.com/70581066/117086752-7d217900-ad1b-11eb-8165-68871e50a50a.png">
+ Overall, it seems that MaSuRCA was a better assembler than SPAdes, as seen in the summary statistics above. This makes sense, since SPAdes is typically used with smaller microbial genomes. MaSuRCA worked best with the Raw and Trimmed reads, likely because they are the least processed. MaSuRCA has its own processing step. It seems like Kraken particularly interferes with this step, as both the Raw and Trimmed Unclassified statistics from Quast, BUSCO, and Bowtie2 are not as good as that of the Raw and Trimmed alone. Additional analysis is necessary to complete the comparison of assemblers. SPAdes runs on the Raw, Raw Unclassified, and Trimmed reads are ongoing. Once completed, Quast, BUSCO, and Bowtie2 will be used to compare these runs. 
+
+Because the data for this project has been previously worked on, we are able to compare the quality of our assemblies to previous efforts. Although we were hoping to improve results, the current workflow did not even reach the previous quality. We were originally puzzled as to what other steps were possible – trimming seemed like it would potentially begin removing important sequences. Then, we found out that an additional scaffolding step was performed to achieve the previous results. Further investigation into scaffolding methods is necessary to improve the genome assembly with the data we currently have. Otherwise, long read data would improve the de novo short read assembly, mapping confidence, and remove some amplification bias. 
+
+
     
