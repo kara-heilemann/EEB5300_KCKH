@@ -260,6 +260,9 @@ The key output for this assembly is the scaffolds.fasta file.  However, although
  #### **Quast**
  #### **BUSCO**
  #### **Bowtie2**
+ #### **Assembler Comparison**
+ <img width="468" alt="AssemblyComparison" src="https://user-images.githubusercontent.com/70581066/117086752-7d217900-ad1b-11eb-8165-68871e50a50a.png">
+
  
  ## **Discussion**
   
