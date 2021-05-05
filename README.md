@@ -306,12 +306,82 @@ END
 
  ### **Assembly Quality**
  #### **Quast**
+ We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length N50, total coverage and number of contigs.  Output for this program is located in the report.txt file.
+ 
+ The Quast shell script for the SPAdes assembly of the trimmed and unclassified reads was as follows:
+ 
+ ```
+ #!/bin/bash
+#SBATCH --job-name=quast_SPAdes
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=10G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=khalia.cain@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##		Quality Assesment: QUAST		##
+##########################################################
+# SPAdes
+module load quast/5.0.2
+
+quast.py ../03_assembly/SPAdes/scaffolds.fasta \
+	--threads 8 \
+	-o SPAdes
+
+
+module unload quast/5.0.2
+```
+
+ 
+ 
+ The Quast shell script for the MaSuRCA assembly of raw and unclassified reads was as follows:
+
+```
+ #!/bin/bash
+#SBATCH --job-name=quast_mas_rawun
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=10G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kara.heilemann@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##              Quality Assesment: QUAST                ##
+##########################################################
+# MaSuRCA
+module load quast/5.0.2
+
+quast.py ../04_Assembly/masurca_ru/CA/final.genome.scf.fasta \
+        --threads 8 \
+        -o masurca_raw_un
+
+
+module unload quast/5.0.2
+```
+
  #### **BUSCO**
  #### **Bowtie2**
- #### **Assembler Comparison**
- <img width="468" alt="AssemblyComparison" src="https://user-images.githubusercontent.com/70581066/117086752-7d217900-ad1b-11eb-8165-68871e50a50a.png">
+ 
 
  
  ## **Discussion**
-  
+   #### **Assembler Comparison**
+ <img width="468" alt="AssemblyComparison" src="https://user-images.githubusercontent.com/70581066/117086752-7d217900-ad1b-11eb-8165-68871e50a50a.png">
     
