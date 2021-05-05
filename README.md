@@ -254,6 +254,54 @@ module unload SPAdes/3.13.0
 The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
   #### **MaSuRCA**
+ We also performed genome assembly on our four datasets:  raw and pre-Kraken data, raw and unclassified data, trimmed and pre-Kraken data and trimmed and unclassified data using MaSuRCA 3.3.4.  This particular program combines the De Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.
+ 
+ Every MaSuRCA assembly needs a configuration file that contains paramaters for the assembler.  This file will also contain the assembled reads.  Below is the contents of the configuration file for the raw and unclassified dataset:
+ 
+ ```
+ #MaSuRCA configuration file
+DATA
+#Illumina paired end reads supplied as <two-character prefix> <fragment mean> <fragment stdev> <forward_reads> <reverse_reads> 
+PE= pe 350 50  ../../03_Kraken/unclassified_1.fastq ../../03_Kraken/unclassified_2.fastq 
+END
+
+PARAMETERS
+#set this to 1 if your Illumina jumping library reads are shorter than 100bp
+EXTEND_JUMP_READS=0
+#this is k-mer size for deBruijn graph values between 25 and 127 are supported, auto will compute the optimal size based on the read data and GC content
+GRAPH_KMER_SIZE = auto
+#set this to 1 for all Illumina-only assemblies
+#set this to 1 if you have less than 20x long reads (454, Sanger, Pacbio) and less than 50x CLONE coverage by Illumina, Sanger or 454 mate pairs
+#otherwise keep at 0
+USE_LINKING_MATES = 0
+#specifies whether to run mega-reads correction on the grid
+USE_GRID=0
+#specifies queue to use when running on the grid MANDATORY
+GRID_QUEUE=all.q
+#batch size in the amount of long read sequence for each batch on the grid
+GRID_BATCH_SIZE=350000000
+#coverage by the longest Long reads to use
+LHE_COVERAGE=30
+#this parameter is useful if you have too many Illumina jumping library mates. Typically set it to 60 for bacteria and 300 for the other organisms 
+LIMIT_JUMP_COVERAGE = 300
+#these are the additional parameters to Celera Assembler.  do not worry about performance, number or processors or batch sizes -- these are computed automatically. 
+#set cgwErrorRate=0.25 for bacteria and 0.1<=cgwErrorRate<=0.15 for other organisms.
+CA_PARAMETERS =  cgwErrorRate=0.15
+#minimum count k-mers used in error correction 1 means all k-mers are used.  one can increase to 2 if Illumina coverage >100
+KMER_COUNT_THRESHOLD = 1
+#whether to attempt to close gaps in scaffolds with Illumina data
+CLOSE_GAPS=1
+#auto-detected number of cpus to use
+NUM_THREADS = 8
+#this is mandatory jellyfish hash size -- a safe value is estimated_genome_size*estimated_coverage
+JF_SIZE = 9500000000
+#set this to 1 to use SOAPdenovo contigging/scaffolding module.  Assembly will be worse but will run faster. Useful for very large (>5Gbp) genomes from Illumina-only data
+SOAP_ASSEMBLY=0
+END
+ ```
+ 
+ The full shell script for the MaSuRCA assembly of the raw and unclassified reads is here.
+ 
  
 
  ### **Assembly Quality**
