@@ -57,7 +57,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   module load jellyfish/2.2.6
   jellyfish count -t 30 -C -m 21 -s 100G -o jf21kruh1_out ../../03_Kraken/raw_unclassified_1.fastq ../../03_Kraken/raw_unclassified_2.fastq
   ```
-  The complete script is called JF_rawun.sh and can be found here. This creates an output file, which in. this case is called jf21kruh1_out. The following
+  The complete script is called JF_rawun.sh and can be found [here](EEB5300_KCKH/Jellyfish_Scripts/rawun.sh). This creates an output file, which in. this case is called jf21kruh1_out. The following
   command to count the frequency of each k-mer with a length of 21:
   ```
   module load jellyfish/2.2.6
