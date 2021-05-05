@@ -387,10 +387,91 @@ The output for the MaSuRCA assembly:
 The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The best assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
 
 
-
- #### **BUSCO**
  #### **Bowtie2**
+ Next we used the alignment tool Bowtie2 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads.
  
+ Here is the Bowtie2 script for the SPAdes assembly of trimmed and unclassified reads:
+ 
+ ```
+ #!/bin/bash
+#SBATCH --job-name=bowtie2_SPAdes
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=10G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=khalia.cain@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##		Quality Assesment: bowtie2		##
+##########################################################
+# SPAdes
+mkdir -p SPAdes_index
+
+module load bowtie2/2.3.5.1
+
+bowtie2-build \
+	--threads 8 \
+	../03_assembly/SPAdes/scaffolds.fasta SPAdes_index/SPAdes_index
+
+bowtie2 -x SPAdes_index/SPAdes_index \
+        -1 ../03_kraken/unclassified_1.fastq -2 ../03_kraken/unclassified_2.fastq \
+        -S SPAdes.bowtie2.sam \
+        --threads 8 2>SPAdes.err
+
+module unload bowtie2/2.3.5.1
+```
+
+ 
+ Here is the Bowtie2 script for the MaSuRCA assembly of raw and unclassified reads:
+
+```
+ #!/bin/bash
+#SBATCH --job-name=bowtie2_rawun_masurca
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=5G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kara.heilemann@uconn.edu
+#SBATCH -o %x_%A.out
+#SBATCH -e %x_%A.err
+
+hostname
+date
+
+##########################################################
+##              Quality Assesment: bowtie2              ##
+##########################################################
+# MaSuRCA
+mkdir -p MaSuRCA_rawun_index
+
+module load bowtie2/2.3.5.1
+
+bowtie2-build \
+        --threads 8 \
+        ../04_Assembly/masurca_ru/CA/final.genome.scf.fasta MaSuRCA_rawun_index/MaSuRCA_rawun_index
+
+bowtie2 -x MaSuRCA_rawun_index/MaSuRCA_rawun_index \
+        -U ../../raw_reads/BE8G1_R1.fastq.gz,../../raw_reads/BE8G1_R2.fastq.gz \
+        -S MaSuRCA_rawun.bowtie2.sam \
+        --threads 8 2>MaSuRCA_rawun.err
+
+
+module unload bowtie2/2.3.5.1
+
+ ```
+ 
+ #### **BUSCO**
 
  
  ## **Discussion**
