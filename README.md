@@ -51,7 +51,35 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 ## **Workflow/Analysis**
 ![image](https://user-images.githubusercontent.com/80171724/116919445-4403de80-ac1f-11eb-9790-a130c9ee7b15.png)
 
-  ### **Jellyfish**
+  ### **Jellyfish** 
+  Jellyfish was used to count k-mer occurrence in order to estimate genome size. The following script was used:
+  ```
+  module load jellyfish/2.2.6
+  jellyfish count -t 30 -C -m 21 -s 100G -o jf21kruh1_out ../../03_Kraken/raw_unclassified_1.fastq ../../03_Kraken/raw_unclassified_2.fastq
+  ```
+  The complete script is called JF_rawun.sh and can be found here. This creates an output file, which in. this case is called jf21kruh1_out. The following
+  command to count the frequency of each k-mer with a length of 21:
+  ```
+  module load jellyfish/2.2.6
+  jellyfish histo -o jf21kruh1_out.histo jf21kruh1_out
+  ```
+  This .histo file creates plottable results of the frequency of each k-mer with a length of 21. For the raw unclassified reads, that resulted in over 7000
+  k-mers. The GenomeScope webserver was used to model the k-mer spectrum, which resulted in the following profile:
+  ![image](https://user-images.githubusercontent.com/70581066/117084883-56147880-ad16-11eb-9860-8b0b296ae3cd.png)
+  
+  With the following estimates:
+  ```
+  GenomeScope version 1.0
+  k = 21
+  property                      min               max               
+  Heterozygosity                0.55575%          0.561302%         
+  Genome Haploid Length         241,887,253 bp    242,072,611 bp    
+  Genome Repeat Length          52,807,787 bp     52,848,253 bp     
+  Genome Unique Length          189,079,466 bp    189,224,358 bp    
+  Model Fit                     97.0743%          99.5966%          
+  Read Error Rate               0.231986%         0.231986%  
+  ```
+  This workflow was repeated with the raw data.
   
   ### **Quality Checks with FastQC**
   We used FastQC to determine the quality of our raw data.  
