@@ -57,7 +57,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   module load jellyfish/2.2.6
   jellyfish count -t 30 -C -m 21 -s 100G -o jf21kruh1_out ../../03_Kraken/raw_unclassified_1.fastq ../../03_Kraken/raw_unclassified_2.fastq
   ```
-  The complete script is called JF_rawun.sh and can be found [here](EEB5300_KCKH/Jellyfish_Scripts/rawun.sh). This creates an output file, which in. this case is called jf21kruh1_out. The following
+  The complete script is called JF_rawun.sh and can be found [here](Jellyfish_Scripts/JF_rawun.sh). This creates an output file, which in. this case is called jf21kruh1_out. The following
   command to count the frequency of each k-mer with a length of 21:
   ```
   module load jellyfish/2.2.6
@@ -79,10 +79,10 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   Model Fit                     97.0743%          99.5966%          
   Read Error Rate               0.231986%         0.231986%  
   ```
-  This workflow was repeated with the raw data.
+  This workflow was repeated with the raw data. All scripts can be found [here](Jellyfish_Scripts).
   
   ### **Quality Checks with FastQC**
-  We used FastQC to determine the quality of our raw data.  
+  We used FastQC to determine the quality of our raw data. The full script for raw FastQC, Sickle trimming, and trimmed FastQC is found [here](FastQCandSickle_Scripts). 
   
   In our working directory:
   
@@ -167,7 +167,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
         --use-mpa-style
 ```
 	
-  The complete script is called kraken_raw.sh. This creates the sequence output, report and a summary report.
+  The complete script is called kraken_raw.sh and is found [here](Kraken_Scripts/kraken_raw.sh). This creates the sequence output, report and a summary report.
   ```
   ├── raw_classified_1.fastq
   ├── raw_classified_2.fastq
@@ -194,7 +194,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   1434069 sequences classified (3.82%)
   36073268 sequences unclassified (96.18%)
   ```
-  This workflow was repeated for the trimmed reads, for which the full slurm script is found as kraken_trim.sh. The trimmed read kraken_report.txt gave the following results:
+  This workflow was repeated for the trimmed reads, for which the full slurm script is found as [kraken_trim.sh](Kraken_Scripts/kraken_trim.sh). The trimmed read kraken_report.txt gave the following results:
   ```
   d__Bacteria	647092
   d__Eukaryota	394742
@@ -306,27 +306,11 @@ END
 
  ### **Assembly Quality**
  #### **Quast**
- We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file.
+ We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file. All complete shell scripts are found [here](Quast_Scripts).
  
  The Quast shell script for the SPAdes assembly of the trimmed and unclassified reads was as follows:
  
  ```
- #!/bin/bash
-#SBATCH --job-name=quast_SPAdes
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 8
-#SBATCH --mem=10G
-#SBATCH --partition=general
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=khalia.cain@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##		Quality Assesment: QUAST		##
 ##########################################################
@@ -346,22 +330,6 @@ module unload quast/5.0.2
  The Quast shell script for the MaSuRCA assembly of raw and unclassified reads was as follows:
 
 ```
- #!/bin/bash
-#SBATCH --job-name=quast_mas_rawun
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 8
-#SBATCH --mem=10G
-#SBATCH --partition=general
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=kara.heilemann@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##              Quality Assesment: QUAST                ##
 ##########################################################
@@ -388,27 +356,11 @@ The pink boxes in the above visuals indicate important factors that determine th
 
 
  #### **Bowtie2**
- Next we used the alignment tool Bowtie2 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads.
+ Next we used the alignment tool Bowtie2 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads. All complete shell scripts for Bowtie2 are found [here](Bowtie2_Scripts).
  
  Here is the Bowtie2 script for the SPAdes assembly of trimmed and unclassified reads:
  
  ```
- #!/bin/bash
-#SBATCH --job-name=bowtie2_SPAdes
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 8
-#SBATCH --mem=10G
-#SBATCH --partition=general
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=khalia.cain@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##		Quality Assesment: bowtie2		##
 ##########################################################
@@ -433,22 +385,6 @@ module unload bowtie2/2.3.5.1
  Here is the Bowtie2 script for the MaSuRCA assembly of raw and unclassified reads:
 
 ```
- #!/bin/bash
-#SBATCH --job-name=bowtie2_rawun_masurca
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 8
-#SBATCH --mem=5G
-#SBATCH --partition=general
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=kara.heilemann@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##              Quality Assesment: bowtie2              ##
 ##########################################################
@@ -474,7 +410,6 @@ module unload bowtie2/2.3.5.1
  
 ![Screen Shot 2021-05-05 at 11 33 04 AM](https://user-images.githubusercontent.com/80171724/117167893-ab439f00-ad95-11eb-8ecf-43bf6dfb646e.png)
 
-
  
  And the .err file for MaSuRCA assembly:
  
@@ -483,27 +418,11 @@ module unload bowtie2/2.3.5.1
 The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we used the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
 
  #### **BUSCO**
-BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database.
+BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database. All complete shell scripts are found [here](BUSCO_Scripts).
 
 Here is the BUSCO script for the SPAdes assembly of trimmed and unclassified reads:
 
 ```
-#!/bin/bash
-#SBATCH --job-name=busco_SPAdes
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 1
-#SBATCH --mem=100G
-#SBATCH --partition=xeon
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=khalia.cain@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##		BUSCO					##	
 ##########################################################
@@ -527,22 +446,6 @@ date
 Here is the BUSCO script for the MaSuRCA assembly of raw and unclassified reads:
 
 ```
-#!/bin/bash
-#SBATCH --job-name=busco_mru
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH -c 1
-#SBATCH --mem=50G
-#SBATCH --partition=general
-#SBATCH --qos=general
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=kara.heilemann@uconn.edu
-#SBATCH -o %x_%A.out
-#SBATCH -e %x_%A.err
-
-hostname
-date
-
 ##########################################################
 ##              BUSCO                                   ##      
 ##########################################################
