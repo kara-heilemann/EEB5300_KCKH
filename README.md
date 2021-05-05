@@ -301,7 +301,7 @@ END
  ```
 
  
- The full shell script for the MaSuRCA assembly of the raw and unclassified reads is commit e0c1c7667ffa456a1e4aa88ad54d2a21392841c6
+ The full shell script for the MaSuRCA assembly of the raw and unclassified reads is MaSuRCA_ru.sh.
  
 
  ### **Assembly Quality**
