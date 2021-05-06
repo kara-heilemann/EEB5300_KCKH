@@ -45,7 +45,7 @@ Our initial goal was to perform _de novo_ assembly of the genome of an undescrib
 ## **Data**
 For this project, we used historical data that was prepared, sequenced and de-multiplexed at Kansas University in 2015.  Libraries were prepared using a single 350bp insert and Illumina TruSeq adaptors with the Illumina TruSeq PCR-free library kit.  The libraries were subsequently multi-plexed with four other libraries that were also prepared at KU and sequenced on the HiSeq2500.  Our raw data is de-multiplexed and contains paired end reads that are approximately 100bp in length.
 
-This raw data is organized as zipped fasta files and is stored on UCONN’s Xanadu cluster.  These files can be found here.
+This raw data is organized as zipped fasta files and is stored on UCONN’s Xanadu cluster.
 
 
 ## **Workflow/Analysis**
@@ -207,11 +207,11 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   1182002 sequences classified (3.25%)
   35231013 sequences unclassified (96.75%)
   ```
-  
+  After using JellyFish to estimate the genome size of _Acanthobothrium tortum sp._, FastQC for quality check statistics, Sickle for trimming and Kraken for contanimant screening, we determined the coverage to be 31X for our raw and unclassified reads and 29X for trimmed and unclassified reads
   ### **Assembly**
   
   #### **SPAdes**
-  After trimming and running quality checks on our data, we determined that we had four datasets: raw and pre-contaminant screening reads, raw and unclassified reads, trimmed and pre-contaminant screening reads and trimmed and unclassified reads. We used the SPAdes assembler (3.13.0) to _de novo_ assemble the trimmed and unclassified reads.  We were unable to assemble the other three datasets due to time constraints and limited computational resources.
+  After trimming and running quality checks on our data, we determined that we had four datasets: raw and pre-contaminant screening reads (RP), raw and unclassified reads (RU), trimmed and pre-contaminant screening reads (TP) and trimmed and unclassified reads (TU). We used the SPAdes assembler (3.13.0) to _de novo_ assemble the TU reads.  We were unable to assemble the other three datasets due to time constraints and limited computational resources.
   The SPAdes assembler works by building a de Bruijn graph and estimating k-mer sizes before generating contigs. We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.
   
   The slurm script for the SPAdes assembly entitled SPAdes.sh:
@@ -255,10 +255,10 @@ module unload SPAdes/3.13.0
 The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown but it was likely due to human error) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
   #### **MaSuRCA**
- We performed _de novo_ genome assembly on all four datasets using MaSuRCA 3.3.4.  However, for this short summation of our project we only included scripts and visuals pertaining to the assembly of raw and unclassified reads.
+ We performed _de novo_ genome assembly on all four datasets using MaSuRCA 3.3.4.  However, for this short summation of our project we only included scripts and visuals pertaining to the assembly of RU reads.
  The MaSuRCA program combines the de Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  We chose MaSuRCA because we were unsure about the amount of processing that was previously performed on our data.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.  Therefore, if our data was truly raw, this assembler would run better for our raw reads than our trimmed reads.  However, if the assemblies were of similar quality then the raw reads were likely already trimmed.
  
- Every MaSuRCA assembly needs a configuration file that contains paramaters for the assembler.  This file will also contain the assembled reads.  Below is the contents of the configuration file for the raw and unclassified dataset:
+ Every MaSuRCA assembly needs a configuration file that contains paramaters for the assembler.  This file will also contain the assembled reads.  Below is the contents of the configuration file for the RU dataset:
  
  ```
  #MaSuRCA configuration file
@@ -303,14 +303,14 @@ END
  ```
 
  
- The full shell script for the MaSuRCA assembly of the raw and unclassified reads is found here.
+ The full shell script for the MaSuRCA assembly of the RU reads is found here.
  
 
  ### **Assembly Quality**
  #### **Quast**
  We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file. All complete shell scripts are found [here](Quast_Scripts).
  
- The Quast shell script for the SPAdes assembly of the trimmed and unclassified reads was as follows:
+ The Quast shell script for the SPAdes assembly of the TU reads was as follows:
  
  ```
 ##########################################################
@@ -329,7 +329,7 @@ module unload quast/5.0.2
 
  
  
- The Quast shell script for the MaSuRCA assembly of raw and unclassified reads was as follows:
+ The Quast shell script for the MaSuRCA assembly of RU reads was as follows:
 
 ```
 ##########################################################
@@ -365,7 +365,7 @@ The pink boxes in the above visuals indicate important factors that determine th
  #### **Bowtie2**
  Next we used the alignment tool Bowtie2 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads. All complete shell scripts for Bowtie2 are found [here](Bowtie2_Scripts).
  
- Here is the Bowtie2 script for the SPAdes assembly of trimmed and unclassified reads:
+ Here is the Bowtie2 script for the SPAdes assembly of TU reads:
  
  ```
 ##########################################################
@@ -389,7 +389,7 @@ module unload bowtie2/2.3.5.1
 ```
 
  
- Here is the Bowtie2 script for the MaSuRCA assembly of raw and unclassified reads:
+ Here is the Bowtie2 script for the MaSuRCA assembly of RU reads:
 
 ```
 ##########################################################
@@ -424,12 +424,12 @@ module unload bowtie2/2.3.5.1
 
 
 
-The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we had to use the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
+The overall alignment rate of Bowtie2 for the SPAdes assembly of TU reads was slightly higher than the alignment rate for the MaSuRCA run that used RU reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we had to use the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
 
  #### **BUSCO**
 BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database. All complete shell scripts are found [here](BUSCO_Scripts).
 
-Here is the BUSCO script for the SPAdes assembly of trimmed and unclassified reads:
+Here is the BUSCO script for the SPAdes assembly of TU reads:
 
 ```
 ##########################################################
@@ -452,7 +452,7 @@ date
 
 
 
-Here is the BUSCO script for the MaSuRCA assembly of raw and unclassified reads:
+Here is the BUSCO script for the MaSuRCA assembly of RU reads:
 
 ```
 ##########################################################
@@ -470,27 +470,27 @@ busco -i ../../04_Assembly/masurca_ru/CA/final.genome.scf.fasta \
 module unload busco/5.0.0
 ```
 
-The BUSCO results for the SPAdes assembly of trimmed and unclassified reads:
+The BUSCO results for the SPAdes assembly of TU reads:
 
 ![Screen Shot 2021-05-06 at 2 02 21 PM](https://user-images.githubusercontent.com/80171724/117344729-b7059300-ae73-11eb-982c-89661395d0b5.png)
 
 
 
-The BUSCO results for the MaSuRCA assembly of raw and unclassified reads:
+The BUSCO results for the MaSuRCA assembly of RU reads:
 
 ![Screen Shot 2021-05-06 at 2 07 14 PM](https://user-images.githubusercontent.com/80171724/117345286-5dea2f00-ae74-11eb-9b9e-c50553357308.png)
 
 
-The expected BUSCO score for a non-model organism like _Acanthobothrium tortum_ is 50-95% therefore the better assembly between these two datasets by BUSCO standards was the MaSuRCA assembly for raw and unclassified data.
+The expected BUSCO score for a non-model organism like _Acanthobothrium tortum_ is 50-95% therefore the better assembly between these two datasets by BUSCO standards was the MaSuRCA assembly for RU data.
 
  
  ## **Discussion**
    #### **Assembler Comparison**
    <img width="468" alt="AssemblyComparison" src="https://user-images.githubusercontent.com/70581066/117086752-7d217900-ad1b-11eb-8165-68871e50a50a.png">
    
-   Overall, it seems that MaSuRCA was a better assembler than SPAdes, as seen in the summary statistics above. This makes sense, since SPAdes is typically used with smaller microbial genomes. MaSuRCA worked best with the Raw and Trimmed reads, likely because they are the least processed. MaSuRCA has its own processing step. It seems like Kraken particularly interferes with this step, as both the Raw and Trimmed Unclassified statistics from Quast, BUSCO, and Bowtie2 are not as good as that of the Raw and Trimmed alone. Additional analysis is necessary to complete the comparison of assemblers. SPAdes runs on the Raw, Raw Unclassified, and Trimmed reads are ongoing. Once completed, Quast, BUSCO, and Bowtie2 will be used to compare these runs. 
+   Overall, it seems that MaSuRCA was a better assembler than SPAdes, as seen in the summary statistics above. This makes sense, since SPAdes is typically used with smaller microbial genomes. MaSuRCA worked best with the Raw and Trimmed reads, likely because they are the least processed. MaSuRCA has its own processing step. It seems like Kraken particularly interferes with this step, as both the RU and TU statistics from Quast, BUSCO, and Bowtie2 are not as good as that of the RP and TP alone. Additional analysis is necessary to complete the comparison of assemblers. SPAdes runs on the RP, RU, and TP reads are ongoing. Once completed, Quast, BUSCO, and Bowtie2 will be used to compare these runs. 
    
-   Because the data for this project has been previously worked on, we are able to compare the quality of our assemblies to previous efforts. Although we were hoping to improve results, the current workflow did not even reach the previous quality. We were originally puzzled as to what other steps were possible – trimming seemed like it would potentially begin removing important sequences. Then, we found out that an additional scaffolding step was performed to achieve the previous results. Further investigation into scaffolding methods is necessary to improve the genome assembly with the data we currently have. Otherwise, long read data would improve the de novo short read assembly, mapping confidence, and remove some amplification bias. 
+   Because the data for this project has been previously worked on, we are able to compare the quality of our assemblies to previous efforts. Although we were hoping to improve results, the current workflow did not even reach the previous quality. We were originally puzzled as to what other steps were possible – trimming seemed like it would potentially begin removing important sequences. Then, we found out that an additional scaffolding step was performed to achieve the previous results. Further investigation into scaffolding methods is necessary to improve the genome assembly with the data we currently have.  Additionally, filtering the assemblies to remove contigs less than 1,000 kb may produce better assembly and alignment results.  Another possibility would be to improve Illumina sequencing coverage (our coverage was low at approximately 30X) to 80-100X and perform another _de novo_ assembly using the same programs.  Otherwise, long read data would improve the _de novo_ short read assembly, mapping confidence, and remove some amplification bias. 
 
 
     
