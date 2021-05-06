@@ -255,7 +255,8 @@ module unload SPAdes/3.13.0
 The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown but it was likely due to human error) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
   #### **MaSuRCA**
- We performed _de novo_ genome assembly on all four datasets using MaSuRCA 3.3.4.  This particular program combines the de Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  We chose MaSuRCA because we were unsure about the amount of processing that was previously performed on our data.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.  Therefore, if our data was truly raw, this assembler would run better for our raw reads than our trimmed reads.  However, if the assemblies were of similar quality then the raw reads were likely already trimmed.
+ We performed _de novo_ genome assembly on all four datasets using MaSuRCA 3.3.4.  However, for this short summation of our project we only included scripts and visuals pertaining to the assembly of raw and unclassified reads.
+ The MaSuRCA program combines the de Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  We chose MaSuRCA because we were unsure about the amount of processing that was previously performed on our data.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.  Therefore, if our data was truly raw, this assembler would run better for our raw reads than our trimmed reads.  However, if the assemblies were of similar quality then the raw reads were likely already trimmed.
  
  Every MaSuRCA assembly needs a configuration file that contains paramaters for the assembler.  This file will also contain the assembled reads.  Below is the contents of the configuration file for the raw and unclassified dataset:
  
@@ -347,15 +348,18 @@ module unload quast/5.0.2
 
 The output for the SPAdes assembly:
 
-![Screen Shot 2021-05-06 at 1 43 21 PM](https://user-images.githubusercontent.com/80171724/117342323-1b732300-ae71-11eb-9aee-a18f0df3fa52.png)
+![Screen Shot 2021-05-06 at 1 49 50 PM](https://user-images.githubusercontent.com/80171724/117343114-f7fca800-ae71-11eb-91db-bc74fe502b54.png)
+
 
 
 The output for the MaSuRCA assembly:
 
-![Screen Shot 2021-05-06 at 1 44 39 PM](https://user-images.githubusercontent.com/80171724/117342399-36de2e00-ae71-11eb-88a7-c482f665b182.png)
+![Screen Shot 2021-05-06 at 1 58 53 PM](https://user-images.githubusercontent.com/80171724/117344275-347cd380-ae73-11eb-9fd8-1397dba7a4f6.png)
 
 
-The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The highest quality assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
+
+
+The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The highest quality assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.  Comparing the Quast results of these two assemblies, the MaSuRCA assembly has the be statistics.
 
 
  #### **Bowtie2**
@@ -411,14 +415,16 @@ module unload bowtie2/2.3.5.1
  ```
  Bowtie2 output is in the .err file for the SPAdes assembly:
  
-![Screen Shot 2021-05-05 at 11 33 04 AM](https://user-images.githubusercontent.com/80171724/117167893-ab439f00-ad95-11eb-8ecf-43bf6dfb646e.png)
+![Screen Shot 2021-05-06 at 1 55 35 PM](https://user-images.githubusercontent.com/80171724/117343863-bddfd600-ae72-11eb-9e76-99b4b5dd5d02.png)
 
  
  And the .err file for MaSuRCA assembly:
  
- ![Screen Shot 2021-05-05 at 11 31 23 AM](https://user-images.githubusercontent.com/80171724/117167639-6f103e80-ad95-11eb-88d6-3196655dafdf.png)
+![Screen Shot 2021-05-06 at 2 00 06 PM](https://user-images.githubusercontent.com/80171724/117344435-60985480-ae73-11eb-9da5-be581ca32ea4.png)
 
-The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we used the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
+
+
+The overall alignment rate of Bowtie2 for the SPAdes assembly of trimmed and unclassified reads was slightly higher than the alignment rate for the MaSuRCA run that used raw and unclassified reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we had to use the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
 
  #### **BUSCO**
 BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database. All complete shell scripts are found [here](BUSCO_Scripts).
@@ -466,13 +472,14 @@ module unload busco/5.0.0
 
 The BUSCO results for the SPAdes assembly of trimmed and unclassified reads:
 
-![Screen Shot 2021-05-05 at 12 08 47 PM](https://user-images.githubusercontent.com/80171724/117173339-a9300f00-ad9a-11eb-99cf-b05575d8e28c.png)
+![Screen Shot 2021-05-06 at 2 02 21 PM](https://user-images.githubusercontent.com/80171724/117344729-b7059300-ae73-11eb-982c-89661395d0b5.png)
 
 
 
 The BUSCO results for the MaSuRCA assembly of raw and unclassified reads:
 
-![Screen Shot 2021-05-05 at 12 11 23 PM](https://user-images.githubusercontent.com/80171724/117173695-04fa9800-ad9b-11eb-9199-f6443855c27f.png)
+![Screen Shot 2021-05-06 at 2 07 14 PM](https://user-images.githubusercontent.com/80171724/117345286-5dea2f00-ae74-11eb-9b9e-c50553357308.png)
+
 
 The expected BUSCO score for a non-model organism like _Acanthobothrium tortum_ is 50-95% therefore the better assembly between these two datasets by BUSCO standards was the MaSuRCA assembly for raw and unclassified data.
 
