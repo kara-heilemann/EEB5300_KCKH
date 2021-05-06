@@ -347,11 +347,13 @@ module unload quast/5.0.2
 
 The output for the SPAdes assembly:
 
-![Screen Shot 2021-05-05 at 11 06 27 AM](https://user-images.githubusercontent.com/80171724/117163740-f491ef80-ad91-11eb-8697-b01b6eaac620.png)
+![Screen Shot 2021-05-06 at 1 43 21 PM](https://user-images.githubusercontent.com/80171724/117342323-1b732300-ae71-11eb-9aee-a18f0df3fa52.png)
+
 
 The output for the MaSuRCA assembly:
 
-![Screen Shot 2021-05-05 at 11 07 32 AM](https://user-images.githubusercontent.com/80171724/117163911-1a1ef900-ad92-11eb-9dea-f1970cb64356.png)
+![Screen Shot 2021-05-06 at 1 44 39 PM](https://user-images.githubusercontent.com/80171724/117342399-36de2e00-ae71-11eb-88a7-c482f665b182.png)
+
 
 The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The highest quality assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
 
