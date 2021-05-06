@@ -211,7 +211,8 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   ### **Assembly**
   
   #### **SPAdes**
-  We used the SPAdes assembler to assemble the trimmed, unclassified reads.  We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.  We were unable to assemble the raw, unclassified as well as the raw (pre-contaminant screening) reads due to time constraints and limited computational resources
+  After trimming and running quality checks on our data, we determined that we had four datasets: raw and pre-contaminant screening reads, raw and unclassified reads, trimmed and pre-contaminant screening reads and trimmed and unclassified reads. We used the SPAdes assembler to assemble the trimmed and unclassified reads.  We were unable to assemble the raw, unclassified as well as the raw (pre-contaminant screening) reads due to time constraints and limited computational resources.
+  The SPAdes assembler works by building a de Bruijn graph and estimating k-mer sizes before generating contigs. We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.
   
   The slurm script for the SPAdes assembly entitled SPAdes.sh:
   
