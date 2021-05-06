@@ -37,6 +37,33 @@ Parasitol. 42, 77–151.
 
 (7) Laferty, K. D., Allesina, S. et al. Parasites in food webs: The ultimate missing links. Ecology Letters 11, 533-546 (2008).
 
+### **Software Packages**
+
+Aleksey V. Zimin, Guillaume Marçais, Daniela Puiu, Michael Roberts, Steven L. Salzberg, James A. Yorke, The MaSuRCA genome assembler, Bioinformatics, Volume 29, Issue 21, 1 November 2013, Pages 2669–2677, https://doi.org/10.1093/bioinformatics/btt476
+
+Alexey Gurevich, Vladislav Saveliev, Nikolay Vyahhi and Glenn Tesler, 
+QUAST: quality assessment tool for genome assemblies, 
+Bioinformatics (2013) 29 (8): 1072-1075. doi: 10.1093/bioinformatics/btt086
+First published online: February 19, 2013
+
+Andrews, S. (2010). FastQC:  A Quality Control Tool for High Throughput Sequence Data [Online]. Available online at: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+Gregory W Vurture, Fritz J Sedlazeck, Maria Nattestad, Charles J Underwood, Han Fang, James Gurtowski, Michael C Schatz, GenomeScope: fast reference-free genome profiling from short reads, Bioinformatics, Volume 33, Issue 14, 15 July 2017, Pages 2202–2204, https://doi.org/10.1093/bioinformatics/btx153
+
+Guillaume Marçais, Carl Kingsford, A fast, lock-free approach for efficient parallel counting of occurrences of k-mers, Bioinformatics, Volume 27, Issue 6, 15 March 2011, Pages 764–770, https://doi.org/10.1093/bioinformatics/btr011
+
+Joshi NA, Fass JN. (2011). Sickle: A sliding-window, adaptive, quality-based trimming tool for FastQ files 
+(Version 1.33) [Software].  Available at https://github.com/najoshi/sickle.
+
+Langmead B, Salzberg S. Fast gapped-read alignment with Bowtie 2. Nature Methods. 2012, 9:357-359.
+
+Nurk S. et al. (2013) Assembling Genomes and Mini-metagenomes from Highly Chimeric Reads. In: Deng M., Jiang R., Sun F., Zhang X. (eds) Research in Computational Molecular Biology. RECOMB 2013. Lecture Notes in Computer Science, vol 7821. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-642-37195-0_13
+
+Seppey M., Manni M., Zdobnov E.M. (2019) BUSCO: Assessing Genome Assembly and Annotation Completeness. In: Kollmar M. (eds) Gene Prediction. Methods in Molecular Biology, vol 1962. Humana, New York, NY. 2019 doi.org/10.1007/978-1-4939-9173-0_14. PMID:31020564
+
+Wood, D.E., Salzberg, S.L. Kraken: ultrafast metagenomic sequence classification using exact alignments. Genome Biol 15, R46 (2014). https://doi.org/10.1186/gb-2014-15-3-r46
+
+
 
 ## **Research Goals**
 Our initial goal was to perform _de novo_ assembly of the genome of an undescribed _Acanthobothrium tortum_ species and peform genome annotation.  However, as we our project progressed, our objective shifted towards a sole focus on genome assembly.  Part of the motivation for this alternate path was attributed to the high quality of our raw data and the limited knowledge we had in the beginning concerning whether our data had previously been processed.  Thus, we chose to assemble both raw and trimmed reads and compare the quality and completeness of these genome assemblies to each other.  In doing so, we hoped to gain a better understanding of how each assembly program works and which assemblers and aligners will benefit us most in future projects.
@@ -52,7 +79,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 ![image](https://user-images.githubusercontent.com/80171724/116919445-4403de80-ac1f-11eb-9790-a130c9ee7b15.png)
 
   ### **Genome Estimation: Jellyfish** 
-  Jellyfish was used to count k-mer occurrence in order to estimate genome size. The following script was used:
+  Jellyfish v2.2.6 was used to count k-mer occurrence in order to estimate genome size. The following script was used:
   ```
   module load jellyfish/2.2.6
   jellyfish count -t 30 -C -m 21 -s 100G -o jf21kruh1_out ../../03_Kraken/raw_unclassified_1.fastq ../../03_Kraken/raw_unclassified_2.fastq
@@ -82,7 +109,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   This workflow was repeated with the raw data. All scripts can be found [here](Jellyfish_Scripts).
   
   ### **Quality Checks with FastQC**
-  We used FastQC to determine the quality of our raw data. The full script for raw FastQC, Sickle trimming, and trimmed FastQC is found [here](FastQCandSickle_Scripts). 
+  We used FastQC v0.11.7 to determine the quality of our raw data. The full script for raw FastQC, Sickle trimming, and trimmed FastQC is found [here](FastQCandSickle_Scripts). 
   
   In our working directory:
   
@@ -110,7 +137,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
 
 
   ### **Trimming with Sickle**
-  We used Sickle to trim the 5' and 3' ends of our paired end raw reads and remove any low quality reads.  We kept a minimum read length of 20 basepairs and a minimum average quality score of 20.
+  We used Sickle v1.33 to trim the 5' and 3' ends of our paired end raw reads and remove any low quality reads.  We kept a minimum read length of 20 basepairs and a minimum average quality score of 20.
   
   ```
   module load sickle/1.33
@@ -143,7 +170,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   Thus, we decided to assemble both the raw and trimmed reads to see if trimming benefited the quality of genome assembly.
 
   ### **Contaminant Screening: Kraken**
-  Kraken was run on both raw reads and trimmed reads in order to screen for potential contaminants. 
+  Kraken2.0.8-beta was run on both raw reads and trimmed reads in order to screen for potential contaminants. 
   
   Working directory:
   ```
@@ -308,7 +335,7 @@ END
 
  ### **Assembly Quality**
  #### **Quast**
- We used the Quast program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file. All complete shell scripts are found [here](Quast_Scripts).
+ We used the Quast v5.0.2 program to assess the quality of both the SPAdes and MaSuRCA assemblies. Quast evaluates genome assemblies by generating statistics like contig length, scaffold length, N50, total coverage and number of contigs.  Output for this program is located in the report.txt file. All complete shell scripts are found [here](Quast_Scripts).
  
  The Quast shell script for the SPAdes assembly of the TU reads was as follows:
  
@@ -363,7 +390,7 @@ The pink boxes in the above visuals indicate important factors that determine th
 
 
  #### **Bowtie2**
- Next we used the alignment tool Bowtie2 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads. All complete shell scripts for Bowtie2 are found [here](Bowtie2_Scripts).
+ Next we used the alignment tool Bowtie2v2.3.5.1 to align our assembled reads back to our raw data.  This step helps determine where the assembled sequences are similar to the raw data. It uses unpaired reads. All complete shell scripts for Bowtie2 are found [here](Bowtie2_Scripts).
  
  Here is the Bowtie2 script for the SPAdes assembly of TU reads:
  
@@ -427,7 +454,7 @@ module unload bowtie2/2.3.5.1
 The overall alignment rate of Bowtie2 for the SPAdes assembly of TU reads was slightly higher than the alignment rate for the MaSuRCA run that used RU reads.  However, note the error file for the SPAdes assembly indicates that the reads used here were paired when this aligner specifically uses unpaired reads.  This may have been due to the fact that the scaffolds.fasta file that was initially produced during the SPAdes assembly was misplaced and instead we had to use the assembled_scaffolds.fasta.  For this reason, the only reputable alignment between these two datasets is for the MaSuRCA assembly.
 
  #### **BUSCO**
-BUSCO was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database. All complete shell scripts are found [here](BUSCO_Scripts).
+BUSCO v5.0.0 was used to evaluate the completness of each set of reads.  BUSCO works by detecting orthologous genes in the genome assembly by comparing the assembled sequence to a BUSCO database.  We used the metazoa database located on UCOnn's Xanadu database. All complete shell scripts are found [here](BUSCO_Scripts).
 
 Here is the BUSCO script for the SPAdes assembly of TU reads:
 
