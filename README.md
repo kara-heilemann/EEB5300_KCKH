@@ -39,7 +39,7 @@ Parasitol. 42, 77–151.
 
 
 ## **Research Goals**
-Our initial goal was to assemble the genome of an undescribed _Acanthobothrium tortum_ species and peform genome annotation.  However, as we our project progressed, our objective shifted towards a sole focus on genome assembly.  Part of the motivation for this alternate path was attributed to the high quality of our raw data and the limited knowledge we had in the beginning concerning whether our data had previously been processed.  Thus, we chose to assemble both raw and trimmed reads and compare the quality and completeness of these genome assemblies to each other.  In doing so, we hoped to gain a better understanding of how each assembly program works and which assemblers and aligners will benefit us most in future projects.
+Our initial goal was to perform _de novo_ assembly of the genome of an undescribed _Acanthobothrium tortum_ species and peform genome annotation.  However, as we our project progressed, our objective shifted towards a sole focus on genome assembly.  Part of the motivation for this alternate path was attributed to the high quality of our raw data and the limited knowledge we had in the beginning concerning whether our data had previously been processed.  Thus, we chose to assemble both raw and trimmed reads and compare the quality and completeness of these genome assemblies to each other.  In doing so, we hoped to gain a better understanding of how each assembly program works and which assemblers and aligners will benefit us most in future projects.
  
  
 ## **Data**
@@ -211,7 +211,7 @@ This raw data is organized as zipped fasta files and is stored on UCONN’s Xana
   ### **Assembly**
   
   #### **SPAdes**
-  After trimming and running quality checks on our data, we determined that we had four datasets: raw and pre-contaminant screening reads, raw and unclassified reads, trimmed and pre-contaminant screening reads and trimmed and unclassified reads. We used the SPAdes assembler to assemble the trimmed and unclassified reads.  We were unable to assemble the raw, unclassified as well as the raw (pre-contaminant screening) reads due to time constraints and limited computational resources.
+  After trimming and running quality checks on our data, we determined that we had four datasets: raw and pre-contaminant screening reads, raw and unclassified reads, trimmed and pre-contaminant screening reads and trimmed and unclassified reads. We used the SPAdes assembler (3.13.0) to _de novo_ assemble the trimmed and unclassified reads.  We were unable to assemble the other three datasets due to time constraints and limited computational resources.
   The SPAdes assembler works by building a de Bruijn graph and estimating k-mer sizes before generating contigs. We selected SPAdes because it is easy to use and it can take paired-end reads that are in FASTA format as input.  However, SPAdes is not intended for larger genomes and the manual states that for such purposes it can be used at the user's risk.  It is worth mentioning that this genome assembly took six days to run.
   
   The slurm script for the SPAdes assembly entitled SPAdes.sh:
@@ -252,10 +252,10 @@ spades.py \
 module unload SPAdes/3.13.0
 ```
 
-The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
+The key output for this assembly is the scaffolds.fasta file.  However, although we did initially have this file, it was shortly misplaced (the error that caused this is still uknown but it was likely due to human error) so we used the assembled_scaffolds.fasta file for all subsequent quality and completeness checks.  This file was located in the misc folder.
   
   #### **MaSuRCA**
- We also performed genome assembly on our four datasets:  raw and pre-Kraken data, raw and unclassified data, trimmed and pre-Kraken data and trimmed and unclassified data using MaSuRCA 3.3.4.  This particular program combines the De Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  We chose MaSuRCA because we were unsure about the amount of processing that was previously performed on our data.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.  Therefore, if our data was truly raw, this assembler would run better for our raw reads than our trimmed reads.  However, if the assemblies were of similar quality the raw reads were likely already trimmed.
+ We performed _de novo_ genome assembly on all four datasets using MaSuRCA 3.3.4.  This particular program combines the de Bruijn Graph technique and an Overlap-Layout-Consensus Model. In the Overlap-Layout-Consensus Model regions of overlap are determined then graphed as edges while reads are graphed as nodes.  An algorithm goes through the graph multiple times to determine the best route through the graph and contigs are generated.  We chose MaSuRCA because we were unsure about the amount of processing that was previously performed on our data.  MaSuRCA is unique because it does not need pre-processed reads and can work efficiently with raw reads.  Therefore, if our data was truly raw, this assembler would run better for our raw reads than our trimmed reads.  However, if the assemblies were of similar quality then the raw reads were likely already trimmed.
  
  Every MaSuRCA assembly needs a configuration file that contains paramaters for the assembler.  This file will also contain the assembled reads.  Below is the contents of the configuration file for the raw and unclassified dataset:
  
@@ -353,7 +353,7 @@ The output for the MaSuRCA assembly:
 
 ![Screen Shot 2021-05-05 at 11 07 32 AM](https://user-images.githubusercontent.com/80171724/117163911-1a1ef900-ad92-11eb-9dea-f1970cb64356.png)
 
-The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The best assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
+The pink boxes in the above visuals indicate important factors that determine the quality of a genome assembly.  The highest quality assemblies will have a high N50 value, low number of contigs and a total length close to the estimated genome size of 242Mb.
 
 
  #### **Bowtie2**
